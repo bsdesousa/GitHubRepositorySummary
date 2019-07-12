@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,12 +40,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(NoGitHubUserInfoException.class)
-	public ResponseEntity<ExceptionMessage> handleIllegalArgument(NoGitHubUserInfoException ex, Locale locale) {
+	public ResponseEntity<ExceptionMessage> handleIllegalArgument(NoGitHubUserInfoException ex) {
 		return new ResponseEntity<>(new ExceptionMessage(ex.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<ExceptionMessage> handleAccessDeniedException(AccessDeniedException ex, Locale locale) {
+	public ResponseEntity<ExceptionMessage> handleAccessDeniedException(AccessDeniedException ex) {
+		return new ResponseEntity<>(new ExceptionMessage(ex.getMessage()), HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ExceptionMessage> handleBadCredentialsException(BadCredentialsException ex) {
 		return new ResponseEntity<>(new ExceptionMessage(ex.getMessage()), HttpStatus.FORBIDDEN);
 	}
 
@@ -54,5 +60,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		ex.printStackTrace();
 		return new ResponseEntity<>(new ExceptionMessage(errorMessage), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	
 
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm.project.configuration.jwt.JwtTokenProvider;
-import com.ibm.project.model.Usuario;
+import com.ibm.project.model.User;
 
 /**
  * Classe responsável por implementar o rest de autenticação da aplicação.
@@ -37,19 +37,19 @@ public class AuthenticationController {
     JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("")
-    public ResponseEntity signin(@RequestBody Usuario usuario) {
+    public ResponseEntity signin(@RequestBody User usuario) {
 
         try {
             String username = usuario.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, usuario.getPassword()));
             String token = jwtTokenProvider.createToken(username, Arrays.asList("admin"));
 
-            Map<Object, Object> model = new HashMap<>();
+            Map<Object, Object> model = new HashMap<Object, Object>();
             model.put("username", username);
             model.put("token", token);
             return ok(model);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username/password supplied");
+            throw new BadCredentialsException("Usuário ou senha inválida!");
         }
     }
 }
