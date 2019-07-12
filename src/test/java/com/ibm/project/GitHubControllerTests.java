@@ -62,7 +62,7 @@ public class GitHubControllerTests {
             .body(GitHubUser.builder().username("user@git.com").password("password").build())
 
         .when()
-            .post("/git-hub-controller/list")
+            .post("/list")
 
         .then()
             .statusCode(403);
@@ -77,7 +77,7 @@ public class GitHubControllerTests {
             .body(GitHubUser.builder().username("user@git.com").password("password").build())
 
         .when()
-            .post("/git-hub-controller/list")
+            .post("/list")
 
         .then()
             .statusCode(200);
