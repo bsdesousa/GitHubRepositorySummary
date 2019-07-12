@@ -1,3 +1,3 @@
 # GitHubRepositorySummary
 
-Este projeto utiliza a biblioteca <a hef="https://projectlombok.org/">Lombok</a>
+Este projeto utiliza a biblioteca [Lombok](https://projectlombok.org).
